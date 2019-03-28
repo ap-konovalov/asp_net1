@@ -23,15 +23,17 @@ namespace WebStore
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
 
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc();
+//            services.Configure<CookiePolicyOptions>(options =>
+//            {
+//                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+//                options.CheckConsentNeeded = context => true;
+//                options.MinimumSameSitePolicy = SameSiteMode.None;
+//            });
+//
+//
+//            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -46,14 +48,24 @@ namespace WebStore
                 app.UseHsts();
             }
 
-            var response = Configuration["CustomClientResponse"];
-
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseCookiePolicy();
+//            app.UseHttpsRedirection();
+//            app.UseCookiePolicy();
             
-            app.Run(async (context) => { await context.Response.WriteAsync(response); });
+            
+            app.UseStaticFiles();
 
+
+
+
+//            var response = Configuration["CustomClientResponse"];
+//            app.Run(async (context) => { await context.Response.WriteAsync(response); });
+
+            app.UseMvc(route =>
+            {
+                route.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }
