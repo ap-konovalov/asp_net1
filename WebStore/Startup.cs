@@ -25,15 +25,7 @@ namespace WebStore
         {
 
             services.AddMvc();
-//            services.Configure<CookiePolicyOptions>(options =>
-//            {
-//                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-//                options.CheckConsentNeeded = context => true;
-//                options.MinimumSameSitePolicy = SameSiteMode.None;
-//            });
-//
-//
-//            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -44,21 +36,10 @@ namespace WebStore
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
-//            app.UseHttpsRedirection();
-//            app.UseCookiePolicy();
-            
-            
+       
             app.UseStaticFiles();
-
-
-
-
-//            var response = Configuration["CustomClientResponse"];
-//            app.Run(async (context) => { await context.Response.WriteAsync(response); });
 
             app.UseMvc(route =>
             {
