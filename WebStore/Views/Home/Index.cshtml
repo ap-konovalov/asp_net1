@@ -1,12 +1,9 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" charset="utf-8">
-    <title>Страница Index во Views/Home</title>
-</head>
-<body>
-<p>Первая страничка </p>
+﻿<p>Первая страничка</p>
 <hr>
+@for (var i = 1; i < 10; i++)
+{
+    <p>Первая страничка @i</p>
+}
+
 <a asp-controller="Employees" asp-action="Index">Управление сотрудниками</a>
-</body>
-</html>
+

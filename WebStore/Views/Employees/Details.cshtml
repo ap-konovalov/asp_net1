@@ -1,12 +1,5 @@
 @model WebStore.Models.Employee
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>Карточка сотрудника</title>
-</head>
-<body>
 <h3>Карточка сотрудника</h3>
 <div>
     <p>Фамилия: @Model.SurName</p>
@@ -15,5 +8,3 @@
     <p>Возраст: @Model.Age</p>
     <button><a asp-controller="Employees" asp-action="Index">Назад</a></button>
 </div>
-</body>
-</html>
