@@ -14,8 +14,9 @@ namespace WebStore.Controllers
 //            return View();
 //        }
 
+//        [ActionFilterAsync]
         public IActionResult Index() => View();
-        
+
         public IActionResult Shop() => View();
         public IActionResult ProductDetails() => View();
         public IActionResult Login() => View();
@@ -25,12 +26,5 @@ namespace WebStore.Controllers
         public IActionResult Blog() => View();
         public IActionResult BlogSingle() => View();
         public IActionResult NotFound() => View();
-
-
-
-
-
-
-
     }
 }

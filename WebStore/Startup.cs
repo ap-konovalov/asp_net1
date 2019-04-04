@@ -16,17 +16,17 @@ namespace WebStore
     public class Startup
     {
         public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration Configuration)
         {
             this.Configuration = Configuration;
         }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddMvc();
-
+            services.AddMvc(opt => { opt.Filters.Add<ActionFilter>(); });
         }
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -38,14 +38,20 @@ namespace WebStore
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-       
-            app.UseStaticFiles();
 
+            app.UseStaticFiles();
+            
             app.UseMvc(route =>
             {
                 route.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller = Home}/{action = Index}/{id?}");
+//                defaults: new
+//                {
+//                    controller = "Home",
+//                    action = "Index",
+//                    id = (int?) null
+//                });
             });
         }
     }
