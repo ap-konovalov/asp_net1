@@ -34,23 +34,23 @@
 
 <body>
 
-    @await Html.PartialAsync("Partial/_Header");
+@await Html.PartialAsync("Partial/_Header");
 
-    @RenderBody()
+@RenderBody()
 
-    @await Html.PartialAsync("Partial/_Footer");
+@await Html.PartialAsync("Partial/_Footer");
 
-    @*<script src="js/jquery.js"></script>*@
-    @*<script src="js/bootstrap.min.js"></script>*@
+@*<script src="js/jquery.js"></script>*@
+@*<script src="js/bootstrap.min.js"></script>*@
 
-                <script src="~/lib/jquery/jquery.js"></script>
-                <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-                <script src="~/js/jquery.scrollUp.min.js"></script>
-                <script src="~/js/price-range.js"></script>
-                <script src="~/js/jquery.prettyPhoto.js"></script>
-                <script src="~/js/main.js"></script>
+<script src="~/lib/jquery/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/js/jquery.scrollUp.min.js"></script>
+<script src="~/js/price-range.js"></script>
+<script src="~/js/jquery.prettyPhoto.js"></script>
+<script src="~/js/main.js"></script>
 
-                @RenderSection("Scripts", false)
+@RenderSection("Scripts", false)
 
-            </body>
-            </html>
+</body>
+</html>
