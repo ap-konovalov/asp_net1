@@ -1,28 +1,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
- using WebStore.Models;
+using WebStore.Infrastructure.Interfaces;
+using WebStore.Models;
  
  namespace WebStore.Controllers
  {
+//     [Route("Users/[action]")]
+
      public class EmployeesController : Controller
      {
-         // GET
-         private static List<Employee> _Employees = new List<Employee>
+
+         private readonly IEmployeesData _EmployeesData;
+         public EmployeesController(IEmployeesData EmployeesData)
          {
-             new Employee{ Id = 0, SurName = "Ivanov", FirstName = "Inav", Patronymic = "Ivanovoch", Age = 21},
-             new Employee{ Id = 1, SurName = "Sidorov", FirstName = "Sidor", Patronymic = "Sidorovich", Age =32},
-             new Employee{ Id = 2, SurName = "Petrov", FirstName = "Petr", Patronymic = "Petrovich", Age = 32}
-         };
+             _EmployeesData = EmployeesData;
+         }
+
          public IActionResult Index()
          {
              return
-             View(_Employees);
+             View(_EmployeesData.GetAll());
          }
 
+//         [Route("Info/{id}")]
          public IActionResult Details(int id)
          {
-             var employee = _Employees.FirstOrDefault(e => e.Id == id);
+             var employee = _EmployeesData.GetById(id);
              if (employee == null)
                  return NotFound();
              
