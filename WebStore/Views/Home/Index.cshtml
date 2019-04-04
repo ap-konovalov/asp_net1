@@ -1,12 +1,36 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" charset="utf-8">
-    <title>Страница Index во Views/Home</title>
-</head>
-<body>
-<p>Первая страничка </p>
-<hr>
-<a asp-controller="Employees" asp-action="Index">Управление сотрудниками</a>
-</body>
-</html>
+﻿@{
+    Layout = "_LayoutBase";
+    ViewBag.Title = "Main Page";
+}
+
+@await Html.PartialAsync("Partial/_Slider")
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                @await Html.PartialAsync("Partial/_LeftSideBar")
+            </div>
+
+            <div class="col-sm-9 padding-right">
+                @await Html.PartialAsync("Partial/_FeaturesItems")
+                @await Html.PartialAsync("Partial/_CategoryTab")
+                @await Html.PartialAsync("Partial/_RecommendedItems")
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+
+    <script>
+        $("section").click(function () { });
+    </script>
+}
+
+@section Styles
+{
+    <style>
+    </style>
+}
