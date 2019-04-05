@@ -51,6 +51,45 @@ using WebStore.Models;
                  return View(employee);
              }
 
+             return null;
          }
+
+         [HttpPost]
+         public IActionResult Edit(Employee employee)
+         {
+             if (!ModelState.IsValid) return View(employee);
+
+             if (employee.Id > 0)
+             {
+                 var db_employee = _EmployeesData.GetById(employee.Id);
+                 if (db_employee is null)
+                 {
+                     return NotFound();
+                 }
+
+                 db_employee.FirstName = employee.FirstName;
+                 db_employee.SurName = employee.SurName;
+                 db_employee.Patronymic = employee.Patronymic;
+                 db_employee.Age = employee.Age;
+             }
+             else
+             {
+                 _EmployeesData.AddNew(employee);
+                 _EmployeesData.SaveChanges();
+
+                 return RedirectToAction("Index");
+             }
+
+             return null;
+         }
+
+         public IActionResult Delete(int id)
+         {
+             var employee = _EmployeesData.GetById(id);
+             if (employee is null) return NotFound();
+             _EmployeesData.Delete(id);
+             return RedirectToAction("Index");
+         }
+         
      }
  }

@@ -23,6 +23,8 @@ namespace WebStore.Infrastructure.Implementations
         {
             if(employee is null) throw new ArgumentException(nameof(employee));
             if(_Employees.Contains(employee) || _Employees.Any( e => e.Id == employee.Id)) return;
+
+            employee.Id = _Employees.Count == 0 ? 1 : _Employees.Max(e => e.Id) + 1;
             
             _Employees.Add(employee);
         }
