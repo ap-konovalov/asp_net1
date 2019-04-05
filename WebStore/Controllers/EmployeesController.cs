@@ -32,5 +32,25 @@ using WebStore.Models;
              
              return View(employee);
          }
+
+         public IActionResult Edit(int? id)
+         {
+             Employee employee;
+             if (id != null)
+             {
+                 employee = _EmployeesData.GetById((int)id);
+                 if (employee is null)
+                 {
+                     return NotFound();
+                 }
+                 else
+                 {
+                     employee = new Employee();
+                 }
+
+                 return View(employee);
+             }
+
+         }
      }
  }

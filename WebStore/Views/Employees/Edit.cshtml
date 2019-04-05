@@ -1,0 +1,17 @@
+@model WebStore.Models.Employee
+@{
+    ViewData["Title"] = $"Редактирование сотрудника{(Model.Id == 0 ? (int?)null : Model.Id)}";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h4>Сотрудник</h4>
+<hr/>
+
+<div class="row">
+    <div class="col-md-4">
+        <form class="form-control" method="post" asp-controller="">
+            
+        </form>
+    </div>
+</div>
