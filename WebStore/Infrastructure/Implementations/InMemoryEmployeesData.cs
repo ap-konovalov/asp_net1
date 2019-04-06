@@ -36,9 +36,14 @@ namespace WebStore.Infrastructure.Implementations
             _Employees.Remove(employee);
         }
 
-        public void SaveChanges()
+        public void SaveChanges(int id, Employee newEmployeeData)
         {
-            throw new System.NotImplementedException();
+            var oldEmployee = GetById(id);
+            if(oldEmployee is null) return;
+            oldEmployee.SurName = newEmployeeData.SurName;
+            oldEmployee.FirstName = newEmployeeData.FirstName;
+            oldEmployee.Patronymic = newEmployeeData.Patronymic;
+            oldEmployee.Age = newEmployeeData.Age;
         }
     }
 }

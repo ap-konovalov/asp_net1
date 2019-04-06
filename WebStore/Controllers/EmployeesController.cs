@@ -76,8 +76,8 @@ using WebStore.Models;
              else
              {
                  _EmployeesData.AddNew(employee);
-                 _EmployeesData.SaveChanges();
              }
+             _EmployeesData.SaveChanges(employee.Id, employee);
              return RedirectToAction("Index");
          }
 
@@ -86,6 +86,12 @@ using WebStore.Models;
              var employee = _EmployeesData.GetById(id);
              if (employee is null) return NotFound();
              _EmployeesData.Delete(id);
+             return RedirectToAction("Index");
+         }
+
+         public IActionResult SaveChanges(int id, Employee newEmployeeData)
+         {
+            _EmployeesData.SaveChanges(id, newEmployeeData);
              return RedirectToAction("Index");
          }
          
