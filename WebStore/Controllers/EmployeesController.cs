@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
@@ -43,15 +44,15 @@ using WebStore.Models;
                  {
                      return NotFound();
                  }
-                 else
-                 {
-                     employee = new Employee();
-                 }
-
-                 return View(employee);
+               
+             }
+             else
+             {
+                 employee = new Employee();
              }
 
-             return null;
+             return View(employee);
+        
          }
 
          [HttpPost]
@@ -76,11 +77,8 @@ using WebStore.Models;
              {
                  _EmployeesData.AddNew(employee);
                  _EmployeesData.SaveChanges();
-
-                 return RedirectToAction("Index");
              }
-
-             return null;
+             return RedirectToAction("Index");
          }
 
          public IActionResult Delete(int id)
