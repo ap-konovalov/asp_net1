@@ -1,7 +1,9 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStore", "WebStore\WebStore.csproj", "{0350D303-EBB3-439B-A5D4-B5FF8D8345A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStore.Domain", "WebStore.Domain\WebStore.Domain.csproj", "{387F9B32-D554-4D86-8A3A-D95D24559044}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,5 +15,9 @@ Global
 		{0350D303-EBB3-439B-A5D4-B5FF8D8345A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0350D303-EBB3-439B-A5D4-B5FF8D8345A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0350D303-EBB3-439B-A5D4-B5FF8D8345A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{387F9B32-D554-4D86-8A3A-D95D24559044}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{387F9B32-D554-4D86-8A3A-D95D24559044}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{387F9B32-D554-4D86-8A3A-D95D24559044}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{387F9B32-D554-4D86-8A3A-D95D24559044}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

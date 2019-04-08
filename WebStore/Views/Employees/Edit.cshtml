@@ -55,3 +55,8 @@
 <div>
     <a aria-controls="Employees" asp-action="Index">Назад к списку</a>
 </div>
+
+@section Scripts
+{
+    @await Html.PartialAsync("_ValidationScriptPartial");
+}
