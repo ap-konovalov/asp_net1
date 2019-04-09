@@ -17,7 +17,6 @@ namespace WebStore.Controllers
 //        [ActionFilterAsync]
         public IActionResult Index() => View();
 
-        public IActionResult Shop() => View();
         public IActionResult ProductDetails() => View();
         public IActionResult Login() => View();
         public IActionResult ContactUs() => View();
