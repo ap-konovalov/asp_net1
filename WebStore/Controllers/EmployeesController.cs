@@ -88,7 +88,7 @@ using WebStore.Models;
              {
                  _EmployeesData.AddNew(employee);
              }
-             _EmployeesData.SaveChanges(employee.Id, employee);
+             _EmployeesData.SaveChanges();
              return RedirectToAction("Index");
          }
 
@@ -100,11 +100,13 @@ using WebStore.Models;
              return RedirectToAction("Index");
          }
 
-         public IActionResult SaveChanges(int id, Employee newEmployeeData)
-         {
-            _EmployeesData.SaveChanges(id, newEmployeeData);
-             return RedirectToAction("Index");
-         }
-         
+
+
+//         public IActionResult SaveChanges(int id, Employee newEmployeeData)
+//         {
+//            _EmployeesData.SaveChanges(id, newEmployeeData);
+//             return RedirectToAction("Index");
+//         }
+
      }
  }
