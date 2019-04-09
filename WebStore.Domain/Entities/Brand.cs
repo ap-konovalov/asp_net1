@@ -10,17 +10,4 @@ namespace WebStore.Domain.Entities
     {
         public int Order { get; set; }
     }
-
-    /// <summary>
-    /// Секция товаров
-    /// </summary>
-    public class Section : NamedEntity, IOrderedEntity
-    {
-        public int Order { get; set; }
-        
-        /// <summary>
-        /// идентификатор родительской секции
-        /// </summary>
-        public int? ParentId { get; set; }
-    }
 }

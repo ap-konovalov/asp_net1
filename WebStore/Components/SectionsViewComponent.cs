@@ -19,7 +19,7 @@ namespace WebStore.Components
         public IViewComponentResult Invoke()
         {
             var section = GetSections();
-            return View();
+            return View(section);
         }
         
 //        public async Task<IViewComponentResult> InvokeAsync() {}
