@@ -28,6 +28,7 @@ namespace WebStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
+            services.AddSingleton<IProductData, InMemoryProductData>();
             
             services.AddMvc(opt =>
                 {

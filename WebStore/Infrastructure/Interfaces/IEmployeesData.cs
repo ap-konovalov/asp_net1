@@ -13,6 +13,6 @@ namespace WebStore.Infrastructure.Interfaces
 
         void Delete(int id);
 
-        void SaveChanges(int id, Employee employee);
+        void SaveChanges();
     }
 }
