@@ -35,7 +35,7 @@ namespace WebStore
             
             services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
 //            services.AddSingleton<IProductData, InMemoryProductData>();
-            services.AddSingleton<IProductData, SqlProductData>();
+            services.AddScoped<IProductData, SqlProductData>();
 
             
             services.AddMvc(opt =>
@@ -53,13 +53,14 @@ namespace WebStore
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            
             app.UseStaticFiles();
 
 //            app.UseWelcomePage("/Welcome");
