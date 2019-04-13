@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebStore.DAL.Context;
 using WebStore.Infrastructure.Conventions;
 using WebStore.Infrastructure.Implementations;
 using WebStore.Infrastructure.Interfaces;
@@ -27,6 +28,8 @@ namespace WebStore
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<WebStoreContext>( options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
             services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
             services.AddSingleton<IProductData, InMemoryProductData>();
             

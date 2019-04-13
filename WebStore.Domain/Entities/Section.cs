@@ -8,9 +8,9 @@ namespace WebStore.Domain.Entities
     /// <summary>
     /// Секция товаров
     /// </summary>
+    [Table("Sections")]
     public class Section : NamedEntity, IOrderedEntity
     {
-        [Table("Sections")]
         public int Order { get; set; }
         
         /// <summary>
@@ -18,9 +18,6 @@ namespace WebStore.Domain.Entities
         /// </summary>
         public int? ParentId { get; set; }
         
-        [ForeignKey(nameof(ParentId))]
-        public virtual Section ParentSection { get; set; }
-
         [ForeignKey(nameof(ParentId))]
         public virtual Section ParentSection { get; set; }
 
