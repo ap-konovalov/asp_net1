@@ -11,7 +11,7 @@ namespace WebStore.Domain.Entities
     /// </summary>
     public class Brand : NamedEntity, IOrderedEntity
     {
-        [Table("Brands")]
+        [Table("Brands")] // указываем желаемое имя таблицы. Если этого не сделать, то таблица будет Brand (по имени класса)
         public int Order { get; set; }
         
 /// <summary>
