@@ -30,7 +30,7 @@ namespace WebStore
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<WebStoreContext>( options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<WebStoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConection")));
             services.AddTransient<WebStoreContextInitializer>();
             
             services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
