@@ -102,7 +102,9 @@ namespace WebStore
             }
             
             app.UseStaticFiles();
+            app.UseDefaultFiles();
 
+            app.UseAuthentication();
 //            app.UseWelcomePage("/Welcome");
             
             app.UseMvc(route =>
