@@ -50,6 +50,12 @@ namespace WebStore.Controllers
             return
             View();
         }
+        
+[HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel login)
+        {
+            //TODO 1: Write here 1:29˚
+        }
 
         public IActionResult Logout() => RedirectToAction("Index", "Home");
 
