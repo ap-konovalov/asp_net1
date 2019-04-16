@@ -17,7 +17,7 @@ namespace WebStore.Models
         public string SurName { get; set; }
 
         [Display(Name = "Отчество")]
-        [RegularExpression(@"(^[A-Z][a-z]{2,50}$)|(^[А-Я][а-я]{2,50}$)", ErrorMessage = "Некорректный формат Отчества")]
+        [RegularExpression(@"(^[A-Z][a-z]{2,50}$)|(^[А-ЯЁ][а-яё]{2,50}$)", ErrorMessage = "Некорректный формат Отчества")]
         public string Patronymic { get; set; }
 
         [Display(Name = "Возраст")]

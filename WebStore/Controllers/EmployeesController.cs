@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Models;
@@ -56,7 +57,7 @@ using WebStore.Models;
          }
 
          [HttpPost]
-         public IActionResult Edit(Employee employee)
+         public IActionResult Edit(Employee employee, [FromServices] IMapper mapper)
          {
 
              if (employee.Age < 18)
@@ -79,10 +80,14 @@ using WebStore.Models;
                      return NotFound();
                  }
 
-                 db_employee.FirstName = employee.FirstName;
-                 db_employee.SurName = employee.SurName;
-                 db_employee.Patronymic = employee.Patronymic;
-                 db_employee.Age = employee.Age;
+                 mapper.Map(employee, db_employee);
+
+//                 AutoMapper.Mapper.Map(employee, db_employee);
+//                 
+//                 db_employee.FirstName = employee.FirstName;
+//                 db_employee.SurName = employee.SurName;
+//                 db_employee.Patronymic = employee.Patronymic;
+//                 db_employee.Age = employee.Age;
              }
              else
              {
