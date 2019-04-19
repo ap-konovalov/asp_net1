@@ -11,22 +11,24 @@ namespace WebStore.Data
         private readonly WebStoreContext _db;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        
-        public WebStoreContextInitializer(WebStoreContext db, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+
+        public WebStoreContextInitializer(WebStoreContext db, UserManager<User> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             _db = db;
             _userManager = userManager;
             _roleManager = roleManager;
         }
 
+
         public async Task InitializeAsync()
         {
             await _db.Database.MigrateAsync();
 
+            await InitializeIdentityAsync();
+
             if (await _db.Products.AnyAsync())
-            {
                 return;
-            }
 
             using (var transaction = _db.Database.BeginTransaction())
             {
@@ -36,10 +38,9 @@ namespace WebStore.Data
                 await _db.SaveChangesAsync();
                 await _db.Database.ExecuteSqlCommandAsync("SET IDENTITY_INSERT [dbo].[Sections] OFF");
 
-                
                 transaction.Commit();
             }
-            
+
             using (var transaction = _db.Database.BeginTransaction())
             {
                 await _db.Brands.AddRangeAsync(TestData.Brands);
@@ -48,10 +49,9 @@ namespace WebStore.Data
                 await _db.SaveChangesAsync();
                 await _db.Database.ExecuteSqlCommandAsync("SET IDENTITY_INSERT [dbo].[Brands] OFF");
 
-                
                 transaction.Commit();
             }
-            
+
             using (var transaction = _db.Database.BeginTransaction())
             {
                 await _db.Products.AddRangeAsync(TestData.Products);
@@ -60,18 +60,38 @@ namespace WebStore.Data
                 await _db.SaveChangesAsync();
                 await _db.Database.ExecuteSqlCommandAsync("SET IDENTITY_INSERT [dbo].[Products] OFF");
 
-                
                 transaction.Commit();
             }
 
-            await InitializeIdentityAsync();
         }
 
         private async Task InitializeIdentityAsync()
         {
-            if (!await _roleManager.RoleExistsAsync(User.RoleUSer))
+            if (!await _roleManager.RoleExistsAsync(User.RoleUser))
             {
-                _roleManager.CreateAsync(new IdentityRole(User.RoleUSer))
+                _roleManager.CreateAsync(new IdentityRole(User.RoleUser));
+            }
+
+            if (!await _roleManager.RoleExistsAsync(User.RoleAdmin))
+            {
+                _roleManager.CreateAsync(new IdentityRole(User.RoleAdmin));
+
+
+                if (await _userManager.FindByNameAsync(User.AdminUserName) == null)
+                {
+                    var admin = new User
+                    {
+                        UserName = User.AdminUserName,
+                        Email = $"{User.AdminUserName}@server.ru"
+                    };
+
+                    var creation_result = await _userManager.CreateAsync(admin, User.DefaultAdminPassword);
+
+                    if (creation_result.Succeeded)
+                    {
+                        await _userManager.AddToRoleAsync(admin, User.RoleAdmin);
+                    }
+                }
             }
         }
     }

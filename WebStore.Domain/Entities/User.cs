@@ -8,7 +8,7 @@ namespace WebStore.Domain.Entities
         public const string DefaultAdminPassword = "admin";
         
         public const string RoleAdmin = "Administrator";
-        public const string RoleUSer = "User";
+        public const string RoleUser = "User";
 
 
     }
