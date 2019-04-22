@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebStore.Infrastructure.Interfaces;
+using WebStore.Infrastructure.Interfaces.WebStore.Infrastructure.Interfaces;
+using WebStore.ViewModels;
 
 namespace WebStore.Controllers
 {
@@ -7,14 +10,23 @@ namespace WebStore.Controllers
     {
         // GET
         private readonly ICartService _CartService;
-        public CartController(ICartService CartService)
+        private readonly IOrderService _OrderService;
+
+        public CartController(ICartService CartService, IOrderService orderService)
         {
             _CartService = CartService;
+            _OrderService = orderService;
         }
 
         public IActionResult Details()
         {
-            return View(_CartService.TransformCart());
+            var model = new DetailsViewModel
+            {
+                CartViewModel = _CartService.TransformCart(),
+                OrderViewModel = new OrderViewModel()
+            };
+
+            return View(model);
         }
 
         public IActionResult DecrementFromCart(int id)
@@ -39,6 +51,31 @@ namespace WebStore.Controllers
         {
             _CartService.AddToCart(id);
             return RedirectToAction("Details");
+        }
+
+        [HttpPost,ValidateAntiForgeryToken]
+        public IActionResult CheckOut(OrderViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(nameof(Details), new DetailsViewModel
+                {
+                    CartViewModel = _CartService.TransformCart(),
+                    OrderViewModel = model
+                });
+            }
+
+            var order = _OrderService.CreateOrder(model, _CartService.TransformCart(), User.Identity.Name);
+            
+            _CartService.RemoveAll();
+
+            return RedirectToAction("OrderConfirmed", new { id = order.Id});
+        }
+
+        public IActionResult OrderConfirmed(int id)
+        {
+            ViewBag.OrderId = id;
+            return View();
         }
     }
 }
