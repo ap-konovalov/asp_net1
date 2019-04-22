@@ -9,4 +9,6 @@ namespace WebStore.ViewModels
 
         public int ItemsCount => Items?.Sum(item => item.Value) ?? 0;
     }
+
+  
 }
