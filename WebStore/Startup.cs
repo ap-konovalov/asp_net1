@@ -19,6 +19,7 @@ using WebStore.Domain.Entities;
 using WebStore.Infrastructure.Conventions;
 using WebStore.Infrastructure.Implementations;
 using WebStore.Infrastructure.Interfaces;
+using WebStore.Infrastructure.Interfaces.WebStore.Infrastructure.Interfaces;
 using WebStore.Models;
 
 namespace WebStore
@@ -41,6 +42,7 @@ namespace WebStore
 //            services.AddSingleton<IProductData, InMemoryProductData>();
             services.AddScoped<IProductData, SqlProductData>();
             services.AddScoped<ICartService,CookieCartService>();
+            services.AddScoped<IOrderService, SqlOrdersService>();
 
 
             services.AddIdentity<User, IdentityRole>(options =>
