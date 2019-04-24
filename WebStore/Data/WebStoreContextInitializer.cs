@@ -1,61 +1,97 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
+using WebStore.Domain.Entities;
 
 namespace WebStore.Data
 {
     public class WebStoreContextInitializer
     {
         private readonly WebStoreContext _db;
-        
-        public WebStoreContextInitializer(WebStoreContext db)
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+
+        public WebStoreContextInitializer(WebStoreContext db, UserManager<User> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             _db = db;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
+
 
         public async Task InitializeAsync()
         {
             await _db.Database.MigrateAsync();
 
+            await InitializeIdentityAsync();
+
             if (await _db.Products.AnyAsync())
-            {
                 return;
+
+            using (var transaction = _db.Database.BeginTransaction())
+            {
+                await _db.Sections.AddRangeAsync(TestData.Sections);
+
+                await _db.Database.ExecuteSqlCommandAsync("SET IDENTITY_INSERT [dbo].[Sections] ON");
+                await _db.SaveChangesAsync();
+                await _db.Database.ExecuteSqlCommandAsync("SET IDENTITY_INSERT [dbo].[Sections] OFF");
+
+                transaction.Commit();
             }
 
             using (var transaction = _db.Database.BeginTransaction())
             {
-                _db.Sections.AddRange(TestData.Sections);
+                await _db.Brands.AddRangeAsync(TestData.Brands);
 
-                _db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Sections] ON");
-                _db.SaveChanges();
-                _db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Sections] OFF");
+                await _db.Database.ExecuteSqlCommandAsync("SET IDENTITY_INSERT [dbo].[Brands] ON");
+                await _db.SaveChangesAsync();
+                await _db.Database.ExecuteSqlCommandAsync("SET IDENTITY_INSERT [dbo].[Brands] OFF");
 
-                
                 transaction.Commit();
             }
-            
+
             using (var transaction = _db.Database.BeginTransaction())
             {
-                _db.Brands.AddRange(TestData.Brands);
+                await _db.Products.AddRangeAsync(TestData.Products);
 
-                _db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Brands] ON");
-                _db.SaveChanges();
-                _db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Brands] OFF");
+                await _db.Database.ExecuteSqlCommandAsync("SET IDENTITY_INSERT [dbo].[Products] ON");
+                await _db.SaveChangesAsync();
+                await _db.Database.ExecuteSqlCommandAsync("SET IDENTITY_INSERT [dbo].[Products] OFF");
 
-                
                 transaction.Commit();
             }
-            
-            using (var transaction = _db.Database.BeginTransaction())
+
+        }
+
+        private async Task InitializeIdentityAsync()
+        {
+            if (!await _roleManager.RoleExistsAsync(User.RoleUser))
             {
-                _db.Products.AddRange(TestData.Products);
+                _roleManager.CreateAsync(new IdentityRole(User.RoleUser));
+            }
 
-                _db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] ON");
-                _db.SaveChanges();
-                _db.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] OFF");
+            if (!await _roleManager.RoleExistsAsync(User.RoleAdmin))
+            {
+                _roleManager.CreateAsync(new IdentityRole(User.RoleAdmin));
 
-                
-                transaction.Commit();
+
+                if (await _userManager.FindByNameAsync(User.AdminUserName) == null)
+                {
+                    var admin = new User
+                    {
+                        UserName = User.AdminUserName,
+                        Email = $"{User.AdminUserName}@server.ru"
+                    };
+
+                    var creation_result = await _userManager.CreateAsync(admin, User.DefaultAdminPassword);
+
+                    if (creation_result.Succeeded)
+                    {
+                        await _userManager.AddToRoleAsync(admin, User.RoleAdmin);
+                    }
+                }
             }
         }
     }

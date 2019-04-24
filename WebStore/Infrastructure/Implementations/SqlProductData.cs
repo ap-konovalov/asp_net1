@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
 using WebStore.Domain.Entities;
@@ -43,6 +44,14 @@ namespace WebStore.Infrastructure.Implementations
 
             return products.AsEnumerable();
         }
-        
+
+        public Product GetProductById(int id)
+        {
+            return _db.Products
+                .Include(product => product.Brand)
+                .Include(product => product.Section)
+                .FirstOrDefault(product => product.Id == id);
+        }
     }
+    
 }
